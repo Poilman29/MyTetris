@@ -3,9 +3,8 @@
 MainModel::MainModel(QObject *parent)
     : QObject{parent}
 {
-    tetrominoe = new Tetrominoe(TetrominoeType::T,this);
-    this->tetrominoe->setRotationState(0);
-    this->updateModel();
+
+    // this->updateModel();
     //updateModelDebug();
 
     // timer.setInterval(500);

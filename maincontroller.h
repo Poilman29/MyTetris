@@ -10,6 +10,8 @@ class MainController
     QApplication* mainThread;
     MainModel* mainModel;
 
+    Tetrominoe* tetrominoe;
+
 public:
     MainController(MainModel *mainModel, int argc, char *argv[]);
     ~MainController();
