@@ -103,7 +103,6 @@ void MainModel::changeTetrominoeType()
     tetrominoeType = (tetrominoeType % 6) ;
     this->tetrominoe->setType(static_cast<TetrominoeType>(tetrominoeType));
 
-
     this->updateModel();
 }
 

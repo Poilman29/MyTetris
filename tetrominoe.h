@@ -57,6 +57,7 @@ public:
     void setType(TetrominoeType newType);
 
 
+    void rotate(bool clockWise);
 
     // TODO
     // bool relativeMatrixBool[4][4];

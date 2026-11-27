@@ -25,9 +25,10 @@ public:
     bool isCurrentTetrominoe() const;
     void setIsCurrentTetrominoe(bool newIsCurrentTetrominoe);
 
-    void setBlock(bool isVisible, bool isCurrentTetrominoe, TetrominoeType type);
     TetrominoeType tetrominoType() const;
     void setTetrominoType(TetrominoeType newTetrominoType);
+
+    void setBlock(bool isVisible, bool isCurrentTetrominoe, TetrominoeType type);
 };
 
 #endif // BLOCK_H

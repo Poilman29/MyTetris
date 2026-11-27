@@ -120,11 +120,13 @@ void WallView::keyPressEvent(QKeyEvent *event)
     switch(event->key())
     {
     case Qt::Key_Left:
-        this->mainModel->rotate(true);
+        // this->mainModel->rotate(true);
+        this->mainModel->getTetrominoe()->rotate(false);
         break;
 
     case Qt::Key_Right:
-        this->mainModel->rotate(false);
+        // this->mainModel->rotate(false);
+        this->mainModel->getTetrominoe()->rotate(true);
         break;
 
     case Qt::Key_Down:
@@ -136,6 +138,7 @@ void WallView::keyPressEvent(QKeyEvent *event)
     default :
         qDebug() << "Unknown key pressed" ;
     }
+    this->mainModel->updateModel();
     updateView();
 }
 
