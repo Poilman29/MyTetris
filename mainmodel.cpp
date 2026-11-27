@@ -4,12 +4,6 @@ MainModel::MainModel(QObject *parent)
     : QObject{parent}
 {
 
-    // this->updateModel();
-    //updateModelDebug();
-
-    // timer.setInterval(500);
-    // connect(&timer,&QTimer::timeout,this,&MainModel::timerDebug);
-    // timer.start();
 }
 
 Block& MainModel::getBlock(int x, int y)
@@ -28,17 +22,12 @@ void MainModel::setTetrominoe(Tetrominoe *newTetrominoe)
 }
 
 
-
 void MainModel::updateModel()
 {
     int x= tetrominoe->getPosition().x();
     int y= tetrominoe->getPosition().y();
 
     //qInfo() << "x = " << x << " y = " << y;
-
-    // TODO check if we can move the Tetromino or not
-    //bool checkIfPossible = true;
-
 
     // Update Area with new Tetrominoe
     for(int i=y ; i<y+4 ; i++){
@@ -55,47 +44,6 @@ void MainModel::updateModel()
     emit modelUpdated();
 }
 
-void MainModel::updateModelDebug()
-{
-
-    for(int i=0 ; i<20 ; i++){
-        for(int j=0 ; j<10 ; j++){
-            matrix[i][j].setBlock(true,true,TetrominoeType::None);
-        }
-    }
-}
-
-void MainModel::timerDebug()
-{
-    rotate(this->tetrominoe->getRotationState());
-}
-
-void MainModel::rotate(bool direction)
-{
-    int rotationState = this->tetrominoe->getRotationState();
-    direction ?  rotationState++ : rotationState--;
-    rotationState = (rotationState % 4) ;
-
-    if(rotationState < 0){
-        rotationState = rotationState * (-1);
-    }
-    qDebug() << "MainModel : rotation state = " <<rotationState;
-    this->tetrominoe->setRotationState(rotationState);
-
-//    if(rotationState == 0){
-//        QPoint position = this->tetrominoe->getPosition();
-//        int y = position.y();
-//        y++;
-//        position.setY(y);
-//        this->tetrominoe->setPosition(position);
-//    }
-
-
-    this->updateModel();
-}
-
-
-
 void MainModel::changeTetrominoeType()
 {
     int tetrominoeType = this->getTetrominoe()->getType();
@@ -105,6 +53,4 @@ void MainModel::changeTetrominoeType()
 
     this->updateModel();
 }
-
-
 

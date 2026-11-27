@@ -14,7 +14,7 @@ MainController::MainController(MainModel* mainModel, int argc, char *argv[])
 int MainController::run()
 {
     tetrominoe = new Tetrominoe(TetrominoeType::T);
-    tetrominoe->setRotationState(0);
+    // tetrominoe->setRotationState(0);
 
     mainModel->setTetrominoe(tetrominoe);
     mainModel->updateModel();

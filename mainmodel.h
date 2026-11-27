@@ -30,14 +30,9 @@ private :
 
 public slots :
     void updateModel();
-    void updateModelDebug();
-    void timerDebug();
-    void rotate(bool direction);
     void changeTetrominoeType();
 
-
 signals:
-
     void modelUpdated();
 
 };

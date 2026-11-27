@@ -1,14 +1,11 @@
 #include "tetrominoe.h"
 
 
-
 Tetrominoe::Tetrominoe(TetrominoeType type, QObject *parent)
-    : QObject{parent},type{type}
+    : QObject{parent}
 {
     position = QPoint(5,7);
-
-    rotationState = 0;
-    updateRelativeMatrix();
+    setType(type);
 }
 
 
@@ -70,23 +67,17 @@ void Tetrominoe::rotate(bool clockWise)
 {
     Block newRelativeMatrix[4][4];
     if(clockWise){
-        // cout << "for right rotation, new square : " << endl;
         for (int i = 0 ; i < 4 ; i++) {
             for(int j=0 ; j < 4 ; j++){
                 newRelativeMatrix[i][j].setIsVisible(relativeMatrix[4-j-1][i].getIsVisible());
-                // cout << newSquare[i][j] << " ";
             }
-            // cout << endl;
         }
     }
     else {
-        // cout << "for left rotation, new square : " << endl;
         for (int i = 0 ; i < 4 ; i++) {
             for(int j=0 ; j < 4 ; j++){
                 newRelativeMatrix[i][j].setIsVisible(relativeMatrix[j][4-i-1].getIsVisible());
-                // cout << newSquare[i][j] << " ";
             }
-            // cout << endl;
         }
     }
     for (int i = 0 ; i < 4 ; i++) {
@@ -94,19 +85,6 @@ void Tetrominoe::rotate(bool clockWise)
             relativeMatrix[i][j].setIsVisible(newRelativeMatrix[i][j].getIsVisible());
         }
     }
-}
-
-
-int Tetrominoe::getRotationState() const
-{
-    return rotationState;
-}
-
-void Tetrominoe::setRotationState(int newRotationState)
-{
-    // qDebug() << "tetrominoe : " << static_cast<int>(this->getType()) << " rotate from " << this->getRotationState() << " to ";
-    rotationState = newRotationState;
-    updateRelativeMatrix();
 }
 
 
@@ -127,119 +105,3 @@ bool Tetrominoe::setPosition(QPoint newPosition)
     position = newPosition;
     return true;
 }
-
-
-void Tetrominoe::updateRelativeMatrix()
-{
-    for (int i=0 ; i<4 ; i++){
-        for (int j=0 ; j<4 ; j++){
-            relativeMatrix[j][i].setIsVisible(false);
-        }
-    }
-
-    switch(this->type){
-    case TetrominoeType::I :
-        switch(this->rotationState%2) {
-        case 0:
-            relativeMatrix[1][0].setBlock(true,true,type);
-            relativeMatrix[1][1].setBlock(true,true,type);
-            relativeMatrix[1][2].setBlock(true,true,type);
-            relativeMatrix[1][3].setBlock(true,true,type);
-            break;
-        case 1:
-            relativeMatrix[0][1].setBlock(true,true,type);
-            relativeMatrix[1][1].setBlock(true,true,type);
-            relativeMatrix[2][1].setBlock(true,true,type);
-            relativeMatrix[3][1].setBlock(true,true,type);
-            break;
-
-        }
-        break;
-    case TetrominoeType::O :
-        relativeMatrix[0][0].setBlock(true,true,type);
-        relativeMatrix[1][0].setBlock(true,true,type);
-        relativeMatrix[0][1].setBlock(true,true,type);
-        relativeMatrix[1][1].setBlock(true,true,type);
-        break;
-
-    case TetrominoeType::T :
-        switch(this->rotationState) {
-        case 0:
-            relativeMatrix[0][0].setBlock(true,true,type);
-            relativeMatrix[0][1].setBlock(true,true,type);
-            relativeMatrix[0][2].setBlock(true,true,type);
-            relativeMatrix[1][1].setBlock(true,true,type);
-            break;
-        case 1:
-            relativeMatrix[0][1].setBlock(true,true,type);
-            relativeMatrix[1][0].setBlock(true,true,type);
-            relativeMatrix[1][1].setBlock(true,true,type);
-            relativeMatrix[2][1].setBlock(true,true,type);
-            break;
-        case 2:
-            relativeMatrix[0][1].setBlock(true,true,type);
-            relativeMatrix[1][0].setBlock(true,true,type);
-            relativeMatrix[1][1].setBlock(true,true,type);
-            relativeMatrix[1][2].setBlock(true,true,type);
-            break;
-        case 3:
-            relativeMatrix[0][1].setBlock(true,true,type);
-            relativeMatrix[1][1].setBlock(true,true,type);
-            relativeMatrix[1][2].setBlock(true,true,type);
-            relativeMatrix[2][1].setBlock(true,true,type);
-            break;
-        default:
-            qInfo() << "TetrominoeType::O : False rotation type";
-        }
-
-        break;
-
-    case TetrominoeType::L :
-
-        switch(this->rotationState) {
-        case 0:
-            relativeMatrix[0][1].setBlock(true,true,type);
-            relativeMatrix[0][2].setBlock(true,true,type);
-            relativeMatrix[0][3].setBlock(true,true,type);
-            relativeMatrix[1][1].setBlock(true,true,type);
-            break;
-        case 1:
-            relativeMatrix[0][1].setBlock(true,true,type);
-            relativeMatrix[0][2].setBlock(true,true,type);
-            relativeMatrix[1][2].setBlock(true,true,type);
-            relativeMatrix[2][2].setBlock(true,true,type);
-            break;
-        case 2:
-            relativeMatrix[0][2].setBlock(true,true,type);
-            relativeMatrix[1][0].setBlock(true,true,type);
-            relativeMatrix[1][1].setBlock(true,true,type);
-            relativeMatrix[1][2].setBlock(true,true,type);
-            break;
-        case 3:
-            relativeMatrix[0][1].setBlock(true,true,type);
-            relativeMatrix[1][1].setBlock(true,true,type);
-            relativeMatrix[2][1].setBlock(true,true,type);
-            relativeMatrix[2][2].setBlock(true,true,type);
-            break;
-        default:
-            qInfo() << "TetrominoeType::L : False rotation type";
-        }
-
-        break;
-
-    case TetrominoeType::J :
-
-        break;
-
-    case TetrominoeType::Z :
-
-        break;
-    case TetrominoeType::S :
-
-        break;
-    default:
-
-        qInfo() << "Unknown Tetrominoe Type";
-    }
-}
-
